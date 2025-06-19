@@ -10,6 +10,24 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Get dashboard stats
+function dashboard() {
+    $users = selectAll('users');
+    $usersCount = count($users);
+    
+    $posts = selectAll('post');
+    $postsCount = count($posts);
+    
+    $comments = selectAll('comments');
+    $commentsCount = count($comments);
+    
+    return [
+        'users' => $usersCount,
+        'posts' => $postsCount,
+        'comments' => $commentsCount
+    ];
+}
+
 // Get functions to functions.db
 $stats = dashboard();
 $posts = posts();     

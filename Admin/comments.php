@@ -22,8 +22,35 @@ if (isset($_POST['delete'])) {
     }
 }
 
-// Call comment, date and text function 
+// Get comments
+function comments() {
+    global $conn;
+    
+    $sql = "SELECT 
+                c.id as comment_id,
+                c.comment_text,
+                c.created_at,
+                c.users_id,
+                u.username,
+                p.title as post_title
+            FROM comments c
+            LEFT JOIN users u ON c.users_id = u.id
+            LEFT JOIN post p ON c.post_id = p.id
+            ORDER BY c.created_at DESC";
+
+    $stmt = $conn->prepare($sql);
+    
+    if (!$stmt) {
+        die("SQL error: " . $conn->error);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 $comments = comments();
+
 // Format date function
 $date = assignDate('');
 // Shorten the long comments

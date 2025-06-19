@@ -141,52 +141,6 @@ function delete($table, $id){
     return $stmt->affected_rows;
 }
 
-// Get comments -- admin
-function comments() {
-    global $conn;
-    
-    $sql = "SELECT 
-                c.id as comment_id,
-                c.comment_text,
-                c.created_at,
-                c.users_id,
-                u.username,
-                p.title as post_title
-            FROM comments c
-            LEFT JOIN users u ON c.users_id = u.id
-            LEFT JOIN post p ON c.post_id = p.id
-            ORDER BY c.created_at DESC";
-
-    $stmt = $conn->prepare($sql);
-    
-    if (!$stmt) {
-        die("SQL error: " . $conn->error);
-    }
-
-    $stmt->execute();
-    $result = $stmt->get_result();
-    return $result->fetch_all(MYSQLI_ASSOC);
-}
-
-
-// Get dashboard stats -- admin
-function dashboard() {
-    $users = selectAll('users');
-    $usersCount = count($users);
-    
-    $posts = selectAll('post');
-    $postsCount = count($posts);
-    
-    $comments = selectAll('comments');
-    $commentsCount = count($comments);
-    
-    return [
-        'users' => $usersCount,
-        'posts' => $postsCount,
-        'comments' => $commentsCount
-    ];
-}
-
 // Get posts -- admin 
 function posts() {
     global $conn;
