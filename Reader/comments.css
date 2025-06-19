@@ -43,12 +43,12 @@ nav{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    list-style: none; /* <-- Add this line to remove bullets */
-    padding-left: 0;   /* <-- Add this to remove default padding */
+    list-style: none;
+    padding-left: 0;
 }
 
 .comments ul li {
-    background-color: #fff; /* White background for a clean card look */
+    background-color: #fff;
     padding: 20px;
     margin: 0 50px;
     color: #333;
